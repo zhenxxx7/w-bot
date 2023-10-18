@@ -1,0 +1,24 @@
+2023/10/13-14:42:52.976 3794 Reusing MANIFEST D:\Tiffany\SKRIPSI\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/10/13-14:42:52.976 3794 Recovering log #42
+2023/10/13-14:42:52.984 3794 Reusing old log D:\Tiffany\SKRIPSI\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000042.log 
+2023/10/13-14:43:05.235 5540 Level-0 table #48: started
+2023/10/13-14:43:05.244 5540 Level-0 table #48: 42705 bytes OK
+2023/10/13-14:43:05.248 5540 Delete type=0 #42
+2023/10/13-14:43:05.248 3794 Manual compaction at level-0 from '\x00\x19\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x1a\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/10/13-14:43:05.250 3794 Level-0 table #50: started
+2023/10/13-14:43:05.262 3794 Level-0 table #50: 870 bytes OK
+2023/10/13-14:43:05.265 3794 Delete type=0 #47
+2023/10/13-14:43:05.265 3794 Manual compaction at level-0 from '\x00\x1a\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x1b\x00\x00\x00' @ 0 : 0; will stop at '\x00\x1a\x00\x00\x05' @ 82202 : 0
+2023/10/13-14:43:05.265 3794 Compacting 1@0 + 1@1 files
+2023/10/13-14:43:05.275 3794 Generated table #51@0: 1228 keys, 24040 bytes
+2023/10/13-14:43:05.275 3794 Compacted 1@0 + 1@1 files => 24040 bytes
+2023/10/13-14:43:05.277 3794 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/10/13-14:43:05.278 3794 Delete type=2 #50
+2023/10/13-14:43:05.278 3794 Manual compaction at level-0 from '\x00\x1a\x00\x00\x05' @ 82202 : 0 .. '\x00\x1b\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/10/13-14:43:05.695 55c Compacting 1@1 + 1@2 files
+2023/10/13-14:43:05.731 55c Generated table #52@1: 17826 keys, 743383 bytes
+2023/10/13-14:43:05.731 55c Compacted 1@1 + 1@2 files => 743383 bytes
+2023/10/13-14:43:05.734 55c compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/10/13-14:43:05.734 55c Delete type=2 #45
+2023/10/13-14:43:05.734 55c Delete type=2 #48
+2023/10/13-14:43:05.734 55c Delete type=2 #51
