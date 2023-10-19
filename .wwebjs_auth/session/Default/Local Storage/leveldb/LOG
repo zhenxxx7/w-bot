@@ -1,3 +1,6 @@
-2023/10/18-16:47:23.319 11fc Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
-2023/10/18-16:47:23.330 11fc Recovering log #3
-2023/10/18-16:47:23.344 11fc Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\Local Storage\leveldb/000003.log 
+2023/10/18-19:29:57.994 51a8 Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2023/10/18-19:29:57.996 51a8 Recovering log #3
+2023/10/18-19:29:57.997 51a8 Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\Local Storage\leveldb/000003.log 
+2023/10/18-20:03:03.364 1004 Level-0 table #5: started
+2023/10/18-20:03:03.370 1004 Level-0 table #5: 14863 bytes OK
+2023/10/18-20:03:03.373 1004 Delete type=0 #3
