@@ -41,59 +41,86 @@ client.on("ready", () => {
   console.log("READY");
 });
 
+// const welcomedUsers = [];
+const sessionData = {};
+const axios = require("axios");
+
 client.on("message", async (msg) => {
   const number = msg.from;
-  //console.log(number)
+  // console.log(number);
 
-  if (msg.body === "Menu" || msg.body === "menu" || msg.body === "MENU") {
-    msg.reply(`Menu : \n/student\n/teacher`);
+  // welcome message
+  if (!sessionData[number]) {
+    msg.reply(`Selamat datang! Silahkan input NIM/NIP Anda :`);
+    sessionData[number] = { userId: null, verified: false };
+    return;
   }
 
-  if (msg.body === "/student") {
-    msg.reply(
-      `Menu Mahasiswa: \n/IPK\n/IPS\n/Kehadiran Mahasiswa\n/Nilai Matakuliah`
-    );
-  }
+  // verify user
+  const session = sessionData[number];
+  if (!session.verified) {
+    if (msg.body) {
+      session.userId = msg.body;
+      session.verified = true;
+      session.getNumber = (msg.from.match(/\d+/g) || []).join("");
+      console.log(session.getNumber);
 
-  if (msg.body === "/teacher") {
-    msg.reply(`Menu Guru: \n/Kehadiran Mahasiswa\n/Kehadiran Dosen`);
-  }
+      try {
+        const response = await axios.post(
+          "https://3z7mqc2r-8080.asse.devtunnels.ms/users/verify",
+          {
+            userId: session.userId,
+            phone: session.getNumber,
+          }
+        );
 
-  if (msg.body === "/IPK") {
-    msg.reply(`Menu IPK Mahasiswa: \n/View IPK\n/Calculate IPK\n/Update IPK`);
-  }
+        if (response.status === 200) {
+          try {
+            const response = await axios.get(
+              "https://3z7mqc2r-8080.asse.devtunnels.ms/users"
+            );
+            const data = response.data;
+            const userData = data.find(
+              (user) => user.userId === session.userId
+            );
 
-  if (msg.body === "/IPS") {
-    msg.reply(`Menu IPS Mahasiswa: \n/View IPS\n/Calculate IPS\n/Update IPS`);
-  }
-
-  if (msg.body === "/Kehadiran Mahasiswa") {
-    msg.reply(
-      `Menu Kehadiran Mahasiswa: \n/View Kehadiran\n/Mark Kehadiran\n/Update Kehadiran`
-    );
-  }
-
-  if (msg.body === "/Nilai Matakuliah") {
-    msg.reply(
-      `Menu Nilai Matakuliah: \n/View Grades\n/Submit Assignment\n/View Assignment Progress`
-    );
-  }
-
-  if (msg.body === "/Kehadiran Dosen") {
-    msg.reply(
-      `Menu Kehadiran Dosen: \n/View Kehadiran\n/Mark Kehadiran\n/Update Kehadiran`
-    );
+            if (userData.role === "student") {
+              // msg.reply(`Data Anda:\n${JSON.stringify(userData, null, 2)}`);
+              msg.reply(
+                "Selamat datang, " +
+                  userData.name +
+                  "!\nSilahkan pilih menu yang tersedia." +
+                  "\n\nMenu : \n1. View IPK dan IPS\n2. View Kehadiran Mahasiswa\n3. View Nilai Matakuliah"
+              );
+            } else if (userData.role === "lecturer") {
+              msg.reply(
+                "Selamat datang, " +
+                  userData.name +
+                  "!\nSilahkan pilih menu yang tersedia." +
+                  "\n\nMenu : \n1. View Kehadiran Mahasiswa\n2. View Kehadiran Dosen"
+              );
+            } else {
+              msg.reply(`Data Anda tidak ditemukan!`);
+            }
+          } catch (error) {
+            msg.reply("Maaf, terjadi kesalahan saat mengambil data dari URL.");
+          }
+        } else {
+          msg.reply(`Data Anda tidak ditemukan!`);
+        }
+      } catch (error) {
+        msg.reply(`Terjadi kesalahan dalam verifikasi: ${error.message}`);
+      }
+      return;
+    }
   }
 
   // Add more options and handling for other menu items as needed.
-
   if (msg.body === ">send message") {
     msg.reply(
       `Enter the number and message with format : \n>sendto 628xxxxx Hello World`
     );
-  }
-
-  if (msg.body.startsWith(">sendto ")) {
+  } else if (msg.body.startsWith(">sendto ")) {
     const messageParts = msg.body.split(" ");
     if (messageParts.length >= 3) {
       const targetNumber = messageParts[1];
@@ -105,6 +132,17 @@ client.on("message", async (msg) => {
       msg.reply(
         "Format pesan tidak valid. Silakan gunakan format: /kirimpesan [NomorTujuan] [Pesan]"
       );
+    }
+  } else if (msg.body === "test") {
+    try {
+      const response = await axios.get(
+        "https://3z7mqc2r-8080.asse.devtunnels.ms/users"
+      );
+      const data = response.data;
+
+      msg.reply(`Data dari URL:\n${JSON.stringify(data, null, 2)}`);
+    } catch (error) {
+      msg.reply("Maaf, terjadi kesalahan saat mengambil data dari URL.");
     }
   }
 });
