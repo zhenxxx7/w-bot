@@ -6,6 +6,7 @@ const {
   LocalAuth,
 } = require("whatsapp-web.js");
 const qrTerminal = require("qrcode-terminal");
+require("dotenv").config();
 
 const client = new Client({
   authStrategy: new LocalAuth(),
@@ -44,6 +45,7 @@ client.on("ready", () => {
 // const welcomedUsers = [];
 const sessionData = {};
 const axios = require("axios");
+const endpoint = process.env.ENDPOINT;
 
 client.on("message", async (msg) => {
   const number = msg.from;
@@ -67,19 +69,14 @@ client.on("message", async (msg) => {
       // console.log(session.getNumber);
 
       try {
-        const response = await axios.post(
-          "https://3z7mqc2r-8080.asse.devtunnels.ms/users/verify",
-          {
-            userId: session.userId,
-            phone: session.getNumber,
-          }
-        );
+        const response = await axios.post(endpoint + "/verify", {
+          userId: session.userId,
+          phone: session.getNumber,
+        });
 
         if (response.status === 200) {
           try {
-            const response = await axios.get(
-              "https://3z7mqc2r-8080.asse.devtunnels.ms/users"
-            );
+            const response = await axios.get(endpoint + "/users");
             const data = response.data;
             const userData = data.find(
               (user) => user.userId === session.userId
@@ -118,9 +115,7 @@ client.on("message", async (msg) => {
   // Handle submenu
   if (session.verified) {
     try {
-      const response = await axios.get(
-        "https://3z7mqc2r-8080.asse.devtunnels.ms/users"
-      );
+      const response = await axios.get(endpoint + "/users");
       const data = response.data;
       const userData = data.find((user) => user.userId === session.userId);
 
@@ -150,12 +145,8 @@ client.on("message", async (msg) => {
         "Anda memilih: View Kehadiran Mahasiswa. Menampilkan kehadiran Anda."
       );
       try {
-        const attendanceResponse = await axios.get(
-          "https://3z7mqc2r-8080.asse.devtunnels.ms/absents"
-        );
-        const classesResponse = await axios.get(
-          "https://3z7mqc2r-8080.asse.devtunnels.ms/classes"
-        );
+        const attendanceResponse = await axios.get(endpoint + "/absents");
+        const classesResponse = await axios.get(endpoint + "/classes");
         const attendanceData = attendanceResponse.data;
         const classesData = classesResponse.data;
         const kehadiran = attendanceData.filter(
@@ -186,12 +177,8 @@ client.on("message", async (msg) => {
         "Anda memilih: View Nilai Matakuliah. Menampilkan nilai matakuliah Anda."
       );
       try {
-        const gradesResponse = await axios.get(
-          "https://3z7mqc2r-8080.asse.devtunnels.ms/grades"
-        );
-        const classesResponse = await axios.get(
-          "https://3z7mqc2r-8080.asse.devtunnels.ms/classes"
-        );
+        const gradesResponse = await axios.get(endpoint + "/grades");
+        const classesResponse = await axios.get(endpoint + "/classes");
         const gradesData = gradesResponse.data;
         const classesData = classesResponse.data;
         const nilai = gradesData.find(
@@ -258,9 +245,7 @@ client.on("message", async (msg) => {
     }
   } else if (msg.body === "test") {
     try {
-      const response = await axios.get(
-        "https://3z7mqc2r-8080.asse.devtunnels.ms/users"
-      );
+      const response = await axios.get(endpoint + "/users");
       const data = response.data;
 
       msg.reply(`Data dari URL:\n${JSON.stringify(data, null, 2)}`);
