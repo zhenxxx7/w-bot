@@ -53,7 +53,7 @@ client.on("message", async (msg) => {
 
   // welcome message
   if (!sessionData[number]) {
-    msg.reply(`Selamat datang! \nSilahkan input NIM/NIP Anda :`);
+    msg.reply(`Selamat datang! \nSilahkan input NIM/NIDN Anda :`);
     sessionData[number] = { userId: null, verified: false };
     startSessionTimeout(number);
     return;
@@ -69,7 +69,7 @@ client.on("message", async (msg) => {
       // console.log(session.getNumber);
 
       try {
-        const response = await axios.post(endpoint + "/verify", {
+        const response = await axios.post(endpoint + "/users/verify", {
           userId: session.userId,
           phone: session.getNumber,
         });
@@ -82,14 +82,17 @@ client.on("message", async (msg) => {
               (user) => user.userId === session.userId
             );
 
-            if (userData.role === "student") {
+            if (userData.role === "Student" || userData.role === "student") {
               msg.reply(
                 "Selamat datang, " +
                   userData.name +
                   "!\nSilahkan pilih menu yang tersedia." +
                   "\n\nMenu : \n1. View IPK dan IPS\n2. View Kehadiran Mahasiswa\n3. View Nilai Matakuliah"
               );
-            } else if (userData.role === "lecturer") {
+            } else if (
+              userData.role === "Lecturer" ||
+              userData.role === "lecturer"
+            ) {
               msg.reply(
                 "Selamat datang, " +
                   userData.name +
@@ -100,13 +103,18 @@ client.on("message", async (msg) => {
               msg.reply(`Data Anda tidak ditemukan!`);
             }
           } catch (error) {
-            msg.reply("Maaf, terjadi kesalahan saat mengambil data dari URL.");
+            msg.reply("Maaf, terjadi kesalahan. silahkan coba lagi.");
           }
         } else {
           msg.reply(`Data Anda tidak ditemukan!`);
         }
       } catch (error) {
-        msg.reply(`Terjadi kesalahan dalam verifikasi: ${error.message}`);
+        msg.reply(
+          `Terjadi kesalahan dalam verifikasi: ${error.message}\n\nSilahkan memulai sesi lagi.`
+        );
+        clearTimeoutSessionTimeout(number);
+        delete sessionData[number];
+        return;
       }
       return;
     }
@@ -119,15 +127,18 @@ client.on("message", async (msg) => {
       const data = response.data;
       const userData = data.find((user) => user.userId === session.userId);
 
-      if (userData.role === "student") {
+      if (userData.role === "Student" || userData.role === "student") {
         handleStudentSubMenu(msg, userData);
-      } else if (userData.role === "lecturer") {
+      } else if (userData.role === "Lecturer" || userData.role === "lecturer") {
         handleLecturerSubMenu(msg, userData);
       } else {
         msg.reply(`Data Anda tidak ditemukan!`);
       }
     } catch (error) {
-      msg.reply("Maaf, terjadi kesalahan saat mengambil data dari URL.");
+      msg.reply(
+        "Maaf, terjadi kesalahan saat mengambil data silahkan coba lagi."
+      );
+      return;
     }
   }
 
@@ -135,15 +146,88 @@ client.on("message", async (msg) => {
   async function handleStudentSubMenu(msg, userData) {
     const userResponse = msg.body;
 
+    // if (userResponse === "1") {
+    //   msg.reply("Anda memilih: View IPK dan IPS.");
+    //   const semsterEndpoint = endpoint + "/semesters";
+    //   const GPAEndpoint = endpoint + "/functions/GPA/" + userData.userId;
+    //   const IPSendpoint = endpoint + "/functions/cumulativeGPA?userId" + userData.userId + "/&semesterYear=" + userData.semesterYear + "&semesterNumber=" + userData.semesterNumber;
+    //   console.log(IPSendpoint);
+    //   console.log(GPAEndpoint);
+    //   console.log(semsterEndpoint);
+
+    //   try {
+    //     const semesterResponse = await axios.get(semsterEndpoint);
+    //     const semesterData = semesterResponse.data;
+    //     const GPAresponse = await axios.get(GPAEndpoint);
+    //     const GPAdata = GPAresponse.data;
+    //     const IPSresponse = await axios.get(IPSendpoint);
+    //     const IPSdata = IPSresponse.data;
+
+    //     const semesterMessage = semesterData.map((semester) => {
+    //       const messageBold = `*${semester.semesterName}*`;
+    //       return `Semester: ${messageBold}\n`;
+    //     });
+
+    //     msg.reply(
+    //       "Data IPK dan IPS:\n" +
+    //         semesterMessage.join("\n") +
+    //         "\nIPK: " +
+    //         GPAdata +
+    //         "\nIPS: " +
+    //         IPSdata
+    //     );
+    //   }
+    //   catch (error) {
+    //     msg.reply(
+    //       "Maaf, terjadi kesalahan saat mengambil data dari URL."
+    //     );
+    //   }
+    // }
     if (userResponse === "1") {
-      msg.reply(
-        "Anda memilih: View IPK dan IPS. Menampilkan IPK dan IPS Anda."
-      );
-      // Implementasikan logika untuk menampilkan IPK dan IPS di sini
+      msg.reply("Anda memilih: View IPK dan IPS.");
+      const semesterEndpoint = endpoint + "/semesters";
+      const GPAEndpoint = endpoint + "/functions/GPA/" + userData.userId;
+      console.log(semesterEndpoint);
+
+      try {
+        // Ambil data dari endpoint /semester
+        const semesterResponse = await axios.get(semesterEndpoint);
+        const semesterData = semesterResponse.data;
+
+        // show semesters data in console
+        console.log(semesterData);
+
+        // Ambil semesterYear dan semesterNumber dari data /semester
+        const firstSemester = semesterData[0];
+        const semesterYear = firstSemester.semesterYear;
+        const semesterNumber = firstSemester.semesterNumber;
+
+        // Buat URL untuk /functions/cumulativeGPA dengan semesterYear dan semesterNumber
+        const cumulativeGPAEndpoint =
+          endpoint +
+          `/functions/cumulativeGPA?userId=${userData.userId}&semesterYear=${semesterYear}&semesterNumber=${semesterNumber}`;
+
+        console.log(cumulativeGPAEndpoint);
+
+        // Ambil data GPA dan IPS
+        const GPAResponse = await axios.get(GPAEndpoint);
+        const GPAData = GPAResponse.data;
+        const IPSResponse = await axios.get(cumulativeGPAEndpoint);
+        const IPSData = IPSResponse.data;
+
+        // Buat pesan yang mencakup data semester, IPK, dan IPS
+        const semesterMessage = `Semester: ${firstSemester.semesterNumber} Tahun ${firstSemester.semesterYear}\nIPS: ${IPSData}\n`;
+        // const message = `Data IPK dan IPS:\n\n${semesterMessage}\nIPK: ${GPAData}`;
+        const message = `Data IPK dan IPS:\n\n${semesterMessage}\nIPK: ${GPAData.toFixed(
+          2
+        )}`;
+
+        msg.reply(message);
+      } catch (error) {
+        msg.reply("Maaf, terjadi kesalahan saat mengambil data dari URL.");
+      }
     } else if (userResponse === "2") {
-      msg.reply(
-        "Anda memilih: View Kehadiran Mahasiswa. Menampilkan kehadiran Anda."
-      );
+      msg.reply("Anda memilih: View Kehadiran Mahasiswa.");
       try {
         const attendanceResponse = await axios.get(endpoint + "/absents");
         const classesResponse = await axios.get(endpoint + "/classes");
@@ -158,14 +242,15 @@ client.on("message", async (msg) => {
             const kelas = classesData.find(
               (kelas) => kelas.classId === absent.classId
             );
-            return `Kelas: ${kelas.className}, Kehadiran: ${absent.absent}`;
+            const messageBold = `*${kelas.className}*`;
+            return `Kelas: ${messageBold}\nTanggal: ${absent.date}\nKeterangan: ${absent.absent}\n`;
           });
 
           msg.reply(
             "Data Kehadiran Mahasiswa:\n" + kehadiranMessage.join("\n")
           );
         } else {
-          msg.reply("Data kehadiran tidak ditemukan.");
+          msg.reply("Mantaap, Anda tidak absen!");
         }
       } catch (error) {
         msg.reply(
@@ -173,9 +258,7 @@ client.on("message", async (msg) => {
         );
       }
     } else if (userResponse === "3") {
-      msg.reply(
-        "Anda memilih: View Nilai Matakuliah. Menampilkan nilai matakuliah Anda."
-      );
+      msg.reply("Anda memilih: View Nilai Matakuliah.");
       try {
         const gradesResponse = await axios.get(endpoint + "/grades");
         const classesResponse = await axios.get(endpoint + "/classes");
@@ -186,17 +269,17 @@ client.on("message", async (msg) => {
         );
 
         if (nilai) {
-          const kelas = classesData.find(
-            (kelas) => kelas.classId === nilai.classId
-          );
-          if (kelas) {
-            const replyMessage = `Nilai matakuliah Anda adalah sebagai berikut:\n\nMatakuliah: ${kelas.className}\nNilai: ${nilai.grade}`;
-            msg.reply(replyMessage);
-          } else {
-            msg.reply("Data kelas tidak ditemukan.");
-          }
+          const nilaiMessage = gradesData.map((grade) => {
+            const kelas = classesData.find(
+              (kelas) => kelas.classId === grade.classId
+            );
+            const messageBold = `*${kelas.className}*`;
+            return `Matakuliah: ${messageBold}\nNilai: ${grade.grade}\n`;
+          });
+
+          msg.reply("Data Nilai Matakuliah:\n" + nilaiMessage.join("\n"));
         } else {
-          msg.reply("Data nilai tidak ditemukan.");
+          msg.reply("Mantaap, Anda tidak ada nilai!");
         }
       } catch (error) {
         msg.reply("Maaf, terjadi kesalahan saat mengambil data dari URL.");
@@ -211,10 +294,44 @@ client.on("message", async (msg) => {
     const userResponse = msg.body;
 
     if (userResponse === "1") {
-      msg.reply(
-        "Anda memilih: View Kehadiran Mahasiswa. Menampilkan kehadiran mahasiswa Anda."
-      );
-      // Implementasikan logika untuk menampilkan kehadiran mahasiswa di sini
+      msg.reply("Anda memilih: View Kehadiran Mahasiswa.");
+      try {
+        // cek kelas yang diajar jika userId sama dengan teacherId di /classes
+        const classesResponse = await axios.get(endpoint + "/classes");
+        const classesData = classesResponse.data;
+        const kelas = classesData.filter(
+          (kelas) => kelas.teacherId === userData.userId
+        );
+        // cek kehadiran mahasiswa yang late dan absent jika classId sama dengan classId di /absents
+        const attendanceResponse = await axios.get(endpoint + "/absents");
+        const attendanceData = attendanceResponse.data;
+        const kehadiran = attendanceData.filter(
+          (absent) => absent.classId === kelas[0].classId
+        );
+
+        console.log(kelas);
+        console.log(kehadiran);
+
+        // munculkan nama kelas hanya muncul sekali dan jika ada dua kelas maka munculkan dua kelas namun hanya muncul sekali
+        if (kehadiran.length > 0) {
+          const kehadiranMessage = kehadiran.map((absent) => {
+            const messageBold = `*${kelas[0].className}*`;
+            return `Kelas: ${messageBold}\nTanggal: ${absent.date}\nKeterangan: ${absent.absent}\n`;
+          });
+
+          msg.reply(
+            "Data Kehadiran Mahasiswa:\n" + kehadiranMessage.join("\n")
+          );
+        } else {
+          msg.reply(
+            "Mantaap, Anda tidak memiliki mahasiswa yang absen di kelas Anda!"
+          );
+        }
+      } catch (error) {
+        msg.reply(
+          "Maaf, terjadi kesalahan saat mengambil data Kehadiran dari URL."
+        );
+      }
     } else if (userResponse === "2") {
       msg.reply(
         "Anda memilih: View Kehadiran Dosen. Menampilkan kehadiran Anda sebagai dosen."
