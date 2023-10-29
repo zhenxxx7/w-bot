@@ -1,9 +1,32 @@
-2023/10/27-13:14:56.410 710 Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/10/27-13:14:56.411 710 Recovering log #450
-2023/10/27-13:14:56.459 710 Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000450.log 
-2023/10/27-13:14:56.459 710 Delete type=2 #444
-2023/10/27-13:14:56.459 710 Delete type=2 #445
-2023/10/27-13:14:56.459 710 Delete type=2 #446
-2023/10/27-13:14:56.459 710 Delete type=2 #447
-2023/10/27-13:14:56.459 710 Delete type=2 #448
-2023/10/27-13:14:56.459 710 Delete type=2 #451
+2023/10/28-02:11:24.443 4b90 Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/10/28-02:11:24.451 4b90 Recovering log #503
+2023/10/28-02:11:24.863 4b90 Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000503.log 
+2023/10/28-02:11:24.863 4b90 Delete type=2 #488
+2023/10/28-02:11:24.863 4b90 Delete type=2 #489
+2023/10/28-02:11:24.863 4b90 Delete type=2 #490
+2023/10/28-02:11:24.863 4b90 Delete type=2 #491
+2023/10/28-02:11:24.863 4b90 Delete type=2 #492
+2023/10/28-02:11:24.863 4b90 Delete type=2 #493
+2023/10/28-02:11:24.863 4b90 Delete type=2 #494
+2023/10/28-02:11:44.472 42b0 Compacting 1@1 + 1@2 files
+2023/10/28-02:11:44.611 42b0 Generated table #506@1: 17214 keys, 572105 bytes
+2023/10/28-02:11:44.611 42b0 Compacted 1@1 + 1@2 files => 572105 bytes
+2023/10/28-02:11:44.612 42b0 compacted to: files[ 0 0 6 0 0 0 0 ]
+2023/10/28-02:11:44.613 42b0 Delete type=2 #497
+2023/10/28-02:11:44.613 42b0 Delete type=2 #504
+2023/10/28-02:11:45.097 46a8 Level-0 table #508: started
+2023/10/28-02:11:45.129 46a8 Level-0 table #508: 999472 bytes OK
+2023/10/28-02:11:45.130 46a8 Delete type=0 #503
+2023/10/28-02:11:45.145 46a8 Compacting 1@1 + 5@2 files
+2023/10/28-02:11:45.279 46a8 Generated table #509@1: 27099 keys, 2685925 bytes
+2023/10/28-02:11:45.331 46a8 Generated table #510@1: 9738 keys, 2444572 bytes
+2023/10/28-02:11:45.368 46a8 Generated table #511@1: 656 keys, 2135122 bytes
+2023/10/28-02:11:45.422 46a8 Generated table #512@1: 18099 keys, 1821919 bytes
+2023/10/28-02:11:45.422 46a8 Compacted 1@1 + 5@2 files => 9087538 bytes
+2023/10/28-02:11:45.423 46a8 compacted to: files[ 0 0 5 0 0 0 0 ]
+2023/10/28-02:11:45.424 46a8 Delete type=2 #498
+2023/10/28-02:11:45.424 46a8 Delete type=2 #499
+2023/10/28-02:11:45.425 46a8 Delete type=2 #500
+2023/10/28-02:11:45.425 46a8 Delete type=2 #501
+2023/10/28-02:11:45.425 46a8 Delete type=2 #506
+2023/10/28-02:11:45.425 46a8 Delete type=2 #508
