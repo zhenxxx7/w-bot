@@ -176,7 +176,9 @@ client.on("message", async (msg) => {
         const IPSData = IPSResponse.data;
 
         // Buat pesan yang mencakup data semester, IPK, dan IPS
-        const semesterMessage = `Semester: ${firstSemester.semesterNumber} Tahun ${firstSemester.semesterYear}\nIPS: ${IPSData}\n`;
+        const semesterMessage = `Semester: ${
+          firstSemester.semesterNumber
+        } Tahun ${firstSemester.semesterYear}\nIPS: ${IPSData.toFixed(2)}\n`;
         const message = `Data IPK dan IPS:\n\n${semesterMessage}\nIPK: ${GPAData.toFixed(
           2
         )}`;
@@ -253,7 +255,7 @@ client.on("message", async (msg) => {
     const userResponse = msg.body;
 
     if (userResponse === "1") {
-      msg.reply("Menantikan data kehadiran mahasiswa.");
+      msg.reply("Menampilkan data kehadiran mahasiswa.");
       try {
         // cek kelas yang diajar jika userId sama dengan teacherId di /classes
         const classesResponse = await axios.get(endpoint + "/classes");
@@ -261,23 +263,46 @@ client.on("message", async (msg) => {
         const kelas = classesData.filter(
           (kelas) => kelas.teacherId === userData.userId
         );
-        // cek kehadiran mahasiswa yang late dan absent jika classId sama dengan classId di /absents
-        const attendanceResponse = await axios.get(endpoint + "/absents");
-        const attendanceData = attendanceResponse.data;
-        const kehadiran = attendanceData.filter(
-          (absent) => absent.classId === kelas[0].classId
-        );
 
-        console.log(kelas);
-        console.log(kehadiran);
+        if (kelas.length === 0) {
+          msg.reply("Anda tidak mengajar kelas apapun.");
+          return; // Tidak ada kelas yang diajar, keluar dari fungsi.
+        }
 
-        // munculkan nama kelas hanya muncul sekali dan jika ada dua kelas maka munculkan dua kelas namun hanya muncul sekali
-        if (kehadiran.length > 0) {
-          const kehadiranMessage = kehadiran.map((absent) => {
-            const messageBold = `*${kelas[0].className}*`;
-            return `Kelas: ${messageBold}\nTanggal: ${absent.date}\nKeterangan: ${absent.absent}\n`;
+        const kehadiranPromises = kelas.map(async (kelasItem) => {
+          const classId = kelasItem.classId;
+
+          // cek kehadiran mahasiswa yang late dan absent jika classId sama dengan classId di /absents
+          const attendanceResponse = await axios.get(endpoint + "/absents");
+          const attendanceData = attendanceResponse.data;
+          const kehadiran = attendanceData.filter(
+            (absent) =>
+              absent.classId === classId && absent.userId !== userData.userId
+          );
+
+          return {
+            className: kelasItem.className,
+            kehadiran: kehadiran,
+          };
+        });
+
+        const kehadiranResults = await Promise.all(kehadiranPromises);
+
+        const kehadiranMessage = kehadiranResults
+          .filter((result) => result.kehadiran.length > 0)
+          .map((result) => {
+            const messageBold = `*${result.className}*`;
+            const kehadiran = result.kehadiran
+              .map(
+                (absent) =>
+                  `Kelas: ${messageBold}\nTanggal: ${absent.date}\nKeterangan: ${absent.absent}\n`
+              )
+              .join("\n");
+
+            return kehadiran;
           });
 
+        if (kehadiranMessage.length > 0) {
           msg.reply(
             "Data Kehadiran Mahasiswa:\n" + kehadiranMessage.join("\n")
           );
@@ -324,26 +349,6 @@ client.on("message", async (msg) => {
       }
     } else {
       msg.reply("Pilihan tidak valid. Silahkan pilih menu yang tersedia.");
-    }
-  }
-
-  // Add more options and handling for other menu items as needed.
-  if (msg.body === ">send message") {
-    msg.reply(
-      `Enter the number and message with format : \n>sendto 628xxxxx Hello World`
-    );
-  } else if (msg.body.startsWith(">sendto ")) {
-    const messageParts = msg.body.split(" ");
-    if (messageParts.length >= 3) {
-      const targetNumber = messageParts[1];
-      const customMessage = messageParts.slice(2).join(" ");
-      msg.reply(
-        `Message has been send to ${targetNumber}with ${customMessage}`
-      );
-    } else {
-      msg.reply(
-        "Format pesan tidak valid. Silakan gunakan format: /kirimpesan [NomorTujuan] [Pesan]"
-      );
     }
   }
 
