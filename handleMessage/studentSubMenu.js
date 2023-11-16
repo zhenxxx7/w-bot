@@ -149,7 +149,7 @@ async function handleStudentSubMenu(msg, userData) {
         // Format and send grouped grades message
         const groupedNilaiMessage = Object.keys(groupedNilai).map(
           (semesterKey) => {
-            const semesterLabel = `Semester ${semesterKey}`;
+            const semesterLabel = `_*Semester ${semesterKey}*_`;
             const semesterNilaiMessage = groupedNilai[semesterKey].join("\n");
             return `${semesterLabel}\n${semesterNilaiMessage}\n`;
           }

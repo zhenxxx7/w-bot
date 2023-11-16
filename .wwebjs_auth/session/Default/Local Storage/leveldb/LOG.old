@@ -1,3 +1,15 @@
-2023/11/16-14:30:48.537 8008 Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
-2023/11/16-14:30:48.541 8008 Recovering log #54
-2023/11/16-14:30:48.543 8008 Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\Local Storage\leveldb/000054.log 
+2023/11/16-15:02:03.318 6b5c Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2023/11/16-15:02:03.338 6b5c Recovering log #54
+2023/11/16-15:02:03.364 6b5c Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\Local Storage\leveldb/000054.log 
+2023/11/16-15:04:04.204 2910 Level-0 table #58: started
+2023/11/16-15:04:04.206 2910 Level-0 table #58: 15335 bytes OK
+2023/11/16-15:04:04.208 2910 Delete type=0 #54
+2023/11/16-15:04:04.209 2910 Compacting 4@0 + 1@1 files
+2023/11/16-15:04:04.212 2910 Generated table #59@0: 100 keys, 5076 bytes
+2023/11/16-15:04:04.212 2910 Compacted 4@0 + 1@1 files => 5076 bytes
+2023/11/16-15:04:04.213 2910 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/11/16-15:04:04.215 2910 Delete type=2 #46
+2023/11/16-15:04:04.215 2910 Delete type=2 #48
+2023/11/16-15:04:04.216 2910 Delete type=2 #51
+2023/11/16-15:04:04.216 2910 Delete type=2 #55
+2023/11/16-15:04:04.216 2910 Delete type=2 #58

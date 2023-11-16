@@ -1,26 +1,3 @@
-2023/11/16-14:30:49.900 32b4 Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/11/16-14:30:49.901 32b4 Recovering log #798
-2023/11/16-14:30:50.041 32b4 Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000798.log 
-2023/11/16-14:42:50.254 4a78 Level-0 table #810: started
-2023/11/16-14:42:50.283 4a78 Level-0 table #810: 1466736 bytes OK
-2023/11/16-14:42:50.285 4a78 Delete type=0 #798
-2023/11/16-14:42:56.455 4a78 Compacting 1@1 + 8@2 files
-2023/11/16-14:42:56.559 4a78 Generated table #811@1: 86795 keys, 2236037 bytes
-2023/11/16-14:42:56.635 4a78 Generated table #812@1: 30386 keys, 2749349 bytes
-2023/11/16-14:42:56.700 4a78 Generated table #813@1: 10850 keys, 2581715 bytes
-2023/11/16-14:42:56.741 4a78 Generated table #814@1: 1264 keys, 2136375 bytes
-2023/11/16-14:42:56.783 4a78 Generated table #815@1: 616 keys, 2130967 bytes
-2023/11/16-14:42:56.851 4a78 Generated table #816@1: 27941 keys, 2203086 bytes
-2023/11/16-14:42:56.955 4a78 Generated table #817@1: 85970 keys, 2233004 bytes
-2023/11/16-14:42:57.003 4a78 Generated table #818@1: 40096 keys, 788905 bytes
-2023/11/16-14:42:57.003 4a78 Compacted 1@1 + 8@2 files => 17059438 bytes
-2023/11/16-14:42:57.004 4a78 compacted to: files[ 0 0 8 0 0 0 0 ]
-2023/11/16-14:42:57.004 4a78 Delete type=2 #800
-2023/11/16-14:42:57.005 4a78 Delete type=2 #801
-2023/11/16-14:42:57.005 4a78 Delete type=2 #802
-2023/11/16-14:42:57.005 4a78 Delete type=2 #803
-2023/11/16-14:42:57.005 4a78 Delete type=2 #804
-2023/11/16-14:42:57.005 4a78 Delete type=2 #805
-2023/11/16-14:42:57.005 4a78 Delete type=2 #806
-2023/11/16-14:42:57.005 4a78 Delete type=2 #807
-2023/11/16-14:42:57.005 4a78 Delete type=2 #810
+2023/11/16-15:02:04.455 29a4 Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/11/16-15:02:04.456 29a4 Recovering log #809
+2023/11/16-15:02:04.523 29a4 Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000809.log 
