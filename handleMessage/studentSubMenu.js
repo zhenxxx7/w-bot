@@ -110,8 +110,11 @@ async function handleStudentSubMenu(msg, userData) {
     try {
       const gradesResponse = await axios.get(endpoint + "/grades");
       const classesResponse = await axios.get(endpoint + "/classes");
+      const semestersResponse = await axios.get(endpoint + "/semesters");
+
       const gradesData = gradesResponse.data;
       const classesData = classesResponse.data;
+      const semestersData = semestersResponse.data;
 
       // Filter grades for the specific user
       const nilai = gradesData.filter(
@@ -119,15 +122,39 @@ async function handleStudentSubMenu(msg, userData) {
       );
 
       if (nilai.length > 0) {
-        const nilaiMessage = nilai.map((grade) => {
+        // Group grades by semester
+        const groupedNilai = {};
+
+        nilai.forEach((grade) => {
           const kelas = classesData.find(
             (kelas) => kelas.classId === grade.classId
           );
-          const messageBold = `*${kelas.className}*`;
-          return `Matakuliah: ${messageBold}\nNilai: ${grade.grade}\n`;
+          const semester = semestersData.find(
+            (semester) => semester.classId === grade.classId
+          );
+
+          if (kelas && semester) {
+            const semesterKey = `${semester.semesterNumber} Tahun ${semester.semesterYear}`;
+            if (!groupedNilai[semesterKey]) {
+              groupedNilai[semesterKey] = [];
+            }
+
+            const messageBold = `*${kelas.className}*`;
+            const nilaiInfo = `Matakuliah: ${messageBold}\nNilai: ${grade.grade}\n`;
+            groupedNilai[semesterKey].push(nilaiInfo);
+          }
         });
 
-        msg.reply("Data Nilai Matakuliah:\n" + nilaiMessage.join("\n"));
+        // Format and send grouped grades message
+        const groupedNilaiMessage = Object.keys(groupedNilai).map(
+          (semesterKey) => {
+            const semesterLabel = `_*Semester ${semesterKey}*_`;
+            const semesterNilaiMessage = groupedNilai[semesterKey].join("\n");
+            return `${semesterLabel}\n${semesterNilaiMessage}\n`;
+          }
+        );
+
+        msg.reply("Data Nilai Matakuliah:\n" + groupedNilaiMessage.join("\n"));
       } else {
         msg.reply("Mantaap, Anda tidak ada nilai!");
       }

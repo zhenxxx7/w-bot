@@ -1,24 +1,3 @@
-2023/11/08-15:27:03.689 40f4 Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/11/08-15:27:03.690 40f4 Recovering log #687
-2023/11/08-15:27:03.788 40f4 Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000687.log 
-2023/11/08-15:31:12.440 3864 Level-0 table #699: started
-2023/11/08-15:31:12.501 3864 Level-0 table #699: 1402671 bytes OK
-2023/11/08-15:31:12.503 3864 Delete type=0 #687
-2023/11/08-15:31:22.241 37c0 Compacting 1@1 + 7@2 files
-2023/11/08-15:31:22.460 37c0 Generated table #700@1: 87670 keys, 2236851 bytes
-2023/11/08-15:31:22.619 37c0 Generated table #701@1: 4558 keys, 2863424 bytes
-2023/11/08-15:31:22.727 37c0 Generated table #702@1: 10680 keys, 2346483 bytes
-2023/11/08-15:31:22.778 37c0 Generated table #703@1: 710 keys, 2133108 bytes
-2023/11/08-15:31:22.853 37c0 Generated table #704@1: 11046 keys, 2161107 bytes
-2023/11/08-15:31:22.995 37c0 Generated table #705@1: 62006 keys, 2218454 bytes
-2023/11/08-15:31:23.108 37c0 Generated table #706@1: 67656 keys, 1338845 bytes
-2023/11/08-15:31:23.108 37c0 Compacted 1@1 + 7@2 files => 15298272 bytes
-2023/11/08-15:31:23.108 37c0 compacted to: files[ 0 0 7 0 0 0 0 ]
-2023/11/08-15:31:23.109 37c0 Delete type=2 #690
-2023/11/08-15:31:23.109 37c0 Delete type=2 #691
-2023/11/08-15:31:23.110 37c0 Delete type=2 #692
-2023/11/08-15:31:23.110 37c0 Delete type=2 #693
-2023/11/08-15:31:23.110 37c0 Delete type=2 #694
-2023/11/08-15:31:23.110 37c0 Delete type=2 #695
-2023/11/08-15:31:23.110 37c0 Delete type=2 #696
-2023/11/08-15:31:23.110 37c0 Delete type=2 #699
+2023/11/16-14:15:12.054 1e94 Reusing MANIFEST C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/11/16-14:15:12.055 1e94 Recovering log #798
+2023/11/16-14:15:12.115 1e94 Reusing old log C:\Data\prgrm\bot\wbot\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000798.log 
