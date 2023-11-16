@@ -134,13 +134,14 @@ async function handleStudentSubMenu(msg, userData) {
           );
 
           if (kelas && semester) {
-            const semesterKey = `${semester.semesterNumber} Tahun ${semester.semesterYear}`;
+            const semesterKey = `${semester.semesterYear}-${semester.semesterNumber}`;
             if (!groupedNilai[semesterKey]) {
               groupedNilai[semesterKey] = [];
             }
 
             const messageBold = `*${kelas.className}*`;
-            const nilaiInfo = `Matakuliah: ${messageBold}\nNilai: ${grade.grade}\n`;
+            const letterGrade = getLetterGrade(grade.grade);
+            const nilaiInfo = `Matakuliah: ${messageBold}\nNilai: ${grade.grade}\nPredikat Huruf: ${letterGrade}\n`;
             groupedNilai[semesterKey].push(nilaiInfo);
           }
         });
@@ -148,7 +149,7 @@ async function handleStudentSubMenu(msg, userData) {
         // Format and send grouped grades message
         const groupedNilaiMessage = Object.keys(groupedNilai).map(
           (semesterKey) => {
-            const semesterLabel = `_*Semester ${semesterKey}*_`;
+            const semesterLabel = `Semester ${semesterKey}`;
             const semesterNilaiMessage = groupedNilai[semesterKey].join("\n");
             return `${semesterLabel}\n${semesterNilaiMessage}\n`;
           }
@@ -163,6 +164,30 @@ async function handleStudentSubMenu(msg, userData) {
     }
   } else {
     msg.reply("Pilihan tidak valid. Silahkan pilih menu yang tersedia.");
+  }
+}
+
+function getLetterGrade(grade) {
+  if (grade >= 91 && grade <= 100) {
+    return "A";
+  } else if (grade >= 85 && grade <= 90) {
+    return "A-";
+  } else if (grade >= 82 && grade <= 84) {
+    return "B+";
+  } else if (grade >= 78 && grade <= 81) {
+    return "B";
+  } else if (grade >= 75 && grade <= 77) {
+    return "B-";
+  } else if (grade >= 70 && grade <= 74) {
+    return "C+";
+  } else if (grade >= 67 && grade <= 69) {
+    return "C";
+  } else if (grade >= 60 && grade <= 66) {
+    return "C-";
+  } else if (grade >= 40 && grade <= 59) {
+    return "D";
+  } else {
+    return "F";
   }
 }
 
